@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { auth } from "../auth";
 import { headers } from "next/headers";
 
+
 export const signUp = async (email: string, password: string, name: string) => {
     const result = await auth.api.signUpEmail({
         body: {
@@ -13,6 +14,10 @@ export const signUp = async (email: string, password: string, name: string) => {
             callbackURL: "/dashboard",
         }
     })
+
+    if (result) {
+        redirect("/dashboard");
+    }
 
     return result;
 }

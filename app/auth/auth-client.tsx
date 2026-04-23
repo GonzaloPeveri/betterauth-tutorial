@@ -40,12 +40,19 @@ export default function AuthClientPage() {
     try {
       if (isSignIn) {
         const result = await signIn(email, password);
-        if (!result.user) {
+        if (result) {
+          router.push("/dashboard");
+        }
+        if (!result) {
           setError("Invalid email or password");
         }
       } else {
         const result = await signUp(email, password, name);
-        if (!result.user) {
+
+        if (result) {
+          router.push("/dashboard");
+        }
+        if (!result) {
           setError("Failed to create account");
         }
       }
@@ -267,7 +274,7 @@ export default function AuthClientPage() {
                 setError(""); // Clear any previous errors
                 setName(""); // Clear name when switching modes
               }}
-              className="text-indigo-600 hover:text-indigo-500 text-sm font-medium transition-colors"
+              className="text-indigo-600 hover:text-indigo-500 text-sm font-medium transition-colors cursor-pointer"
             >
               {isSignIn
                 ? "Don't have an account? Sign up"
